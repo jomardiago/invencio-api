@@ -1,8 +1,17 @@
-import { Body, Controller, Get, Post, UseGuards } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Post,
+  UseGuards,
+} from "@nestjs/common";
 import { CategoriesService } from "./categories.service";
 import { AuthGuard } from "src/auth/guards/auth.guard";
 import { AdminUserGuard } from "src/users/guards/adminUser.guard";
 import { CreateCategoryDto } from "./dtos/createCategory.dto";
+import { UpdateCategoryDto } from "./dtos/updateCategory.dto";
 
 @Controller({
   path: "categories",
@@ -21,5 +30,13 @@ export class CategoriesController {
   @Get()
   findCategories() {
     return this.categoriesService.findCategories();
+  }
+
+  @Patch(":categoryId")
+  updateCategory(
+    @Param("categoryId") categoryId: string,
+    @Body() data: UpdateCategoryDto,
+  ) {
+    return this.categoriesService.updateCategory(Number(categoryId), data);
   }
 }

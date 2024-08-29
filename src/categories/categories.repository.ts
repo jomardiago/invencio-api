@@ -24,7 +24,26 @@ export class CategoriesRepository {
     });
   }
 
+  findCategoryById(categoryId: number) {
+    return this.prismaService.category.findFirst({
+      where: {
+        id: categoryId,
+      },
+    });
+  }
+
   findCategories() {
     return this.prismaService.category.findMany();
+  }
+
+  updateCategory(categoryId: number, name: string) {
+    return this.prismaService.category.update({
+      data: {
+        name,
+      },
+      where: {
+        id: categoryId,
+      },
+    });
   }
 }
