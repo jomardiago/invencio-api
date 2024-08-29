@@ -47,4 +47,17 @@ export class UsersService {
       throw error;
     }
   }
+
+  async deleteUser(userId: number) {
+    try {
+      await this.usersRepository.deleteUser(userId);
+
+      return {
+        message: "User deleted.",
+      };
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
 }

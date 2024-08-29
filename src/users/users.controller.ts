@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Patch,
@@ -18,24 +19,27 @@ import { UpdateRoleDto } from "./dtos/updateRole.dto";
   version: "1",
 })
 @UseGuards(AuthGuard)
+@UseGuards(AdminUserGuard)
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
-  @UseGuards(AdminUserGuard)
   createUser(@Body() data: CreateUserDto) {
     return this.usersService.createUser(data);
   }
 
   @Get()
-  @UseGuards(AdminUserGuard)
   findUsers() {
     return this.usersService.findUsers();
   }
 
   @Patch(":userId/role")
-  @UseGuards(AdminUserGuard)
   updateRole(@Param("userId") userId: string, @Body() data: UpdateRoleDto) {
     return this.usersService.updateRole(Number(userId), data);
+  }
+
+  @Delete(":userId")
+  deleteUser(@Param("userId") userId: string) {
+    return this.usersService.deleteUser(Number(userId));
   }
 }
