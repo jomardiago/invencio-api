@@ -26,7 +26,7 @@ export class UsersService {
     }
   }
 
-  async findUsers() {
+  findUsers() {
     try {
       return this.usersRepository.findUsers();
     } catch (error) {

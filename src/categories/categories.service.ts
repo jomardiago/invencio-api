@@ -24,4 +24,13 @@ export class CategoriesService {
       throw error;
     }
   }
+
+  findCategories() {
+    try {
+      return this.categoriesRepository.findCategories();
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
 }

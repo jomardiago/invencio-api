@@ -1,4 +1,4 @@
-import { Body, Controller, Post, UseGuards } from "@nestjs/common";
+import { Body, Controller, Get, Post, UseGuards } from "@nestjs/common";
 import { CategoriesService } from "./categories.service";
 import { AuthGuard } from "src/auth/guards/auth.guard";
 import { AdminUserGuard } from "src/users/guards/adminUser.guard";
@@ -16,5 +16,10 @@ export class CategoriesController {
   @Post()
   createCategory(@Body() data: CreateCategoryDto) {
     return this.categoriesService.createCategory(data);
+  }
+
+  @Get()
+  findCategories() {
+    return this.categoriesService.findCategories();
   }
 }

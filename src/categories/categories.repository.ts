@@ -23,4 +23,8 @@ export class CategoriesRepository {
       },
     });
   }
+
+  findCategories() {
+    return this.prismaService.category.findMany();
+  }
 }
