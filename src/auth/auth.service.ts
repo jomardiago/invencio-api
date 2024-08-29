@@ -42,10 +42,14 @@ export class AuthService {
 
   async changePassword(userId: number, data: ChangePasswordDto) {
     try {
-      const user = this.usersRepository.findUserById(userId);
+      const user = await this.usersRepository.findUserById(userId);
       if (!user) throw new NotFoundException("User does not exists.");
 
-      const hashedPassword = await hash(data.password, 10);
+      const passwordsMatched = await compare(data.oldPassword, user.password);
+      if (!passwordsMatched)
+        throw new UnauthorizedException("Incorrect old password.");
+
+      const hashedPassword = await hash(data.newPassword, 10);
       await this.usersRepository.updatePassword(userId, hashedPassword);
 
       return {
