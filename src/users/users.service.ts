@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { hash } from "bcrypt";
 import { CreateUserDto } from "./dtos/createUser.dto";
 import { UsersRepository } from "./users.repository";
@@ -37,6 +37,9 @@ export class UsersService {
 
   async updateRole(userId: number, data: UpdateRoleDto) {
     try {
+      const user = await this.usersRepository.findUserById(userId);
+      if (!user) throw new NotFoundException("User does not exists.");
+
       await this.usersRepository.updateRole(userId, data.isAdmin);
 
       return {
@@ -50,6 +53,9 @@ export class UsersService {
 
   async deleteUser(userId: number) {
     try {
+      const user = await this.usersRepository.findUserById(userId);
+      if (!user) throw new NotFoundException("User does not exists.");
+
       await this.usersRepository.deleteUser(userId);
 
       return {
