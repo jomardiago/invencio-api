@@ -5,10 +5,11 @@ import {
   UnauthorizedException,
 } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
+import { User } from "@prisma/client";
 import { Request } from "express";
 
 @Injectable()
-export class AuthGuard implements CanActivate {
+export class AdminUserGuard implements CanActivate {
   constructor(private jwtService: JwtService) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
@@ -19,14 +20,14 @@ export class AuthGuard implements CanActivate {
       throw new UnauthorizedException();
     }
 
-    try {
-      const payload = await this.jwtService.verifyAsync(token, {
-        secret: process.env.JWT_SECRET,
-      });
+    const payload: User = await this.jwtService.verifyAsync(token, {
+      secret: process.env.JWT_SECRET,
+    });
 
-      request["user"] = payload;
-    } catch {
-      throw new UnauthorizedException("Authorization token is missing.");
+    if (!payload.isAdmin) {
+      throw new UnauthorizedException(
+        "You are not allowed to perform this action.",
+      );
     }
 
     return true;
