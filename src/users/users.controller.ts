@@ -1,4 +1,4 @@
-import { Body, Controller, Post, UseGuards } from "@nestjs/common";
+import { Body, Controller, Get, Post, UseGuards } from "@nestjs/common";
 import { UsersService } from "./users.service";
 import { AuthGuard } from "src/auth/guards/auth.guard";
 import { AdminUserGuard } from "./guards/adminUser.guard";
@@ -16,5 +16,11 @@ export class UsersController {
   @UseGuards(AdminUserGuard)
   createUser(@Body() data: CreateUserDto) {
     return this.usersService.createUser(data);
+  }
+
+  @Get()
+  @UseGuards(AdminUserGuard)
+  findUsers() {
+    return this.usersService.findUsers();
   }
 }

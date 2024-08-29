@@ -28,6 +28,18 @@ export class UsersRepository {
     });
   }
 
+  findUsers() {
+    return this.prismaService.user.findMany({
+      select: {
+        id: true,
+        email: true,
+        isAdmin: true,
+        createdAt: true,
+        password: false,
+      },
+    });
+  }
+
   updatePassword(userId: number, newPassword: string) {
     return this.prismaService.user.update({
       data: {

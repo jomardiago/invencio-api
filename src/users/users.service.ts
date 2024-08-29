@@ -24,4 +24,13 @@ export class UsersService {
       throw error;
     }
   }
+
+  async findUsers() {
+    try {
+      return this.usersRepository.findUsers();
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
 }
