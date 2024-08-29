@@ -12,10 +12,29 @@ export class UsersRepository {
     });
   }
 
+  findUserById(id: number) {
+    return this.prismaService.user.findFirst({
+      where: {
+        id,
+      },
+    });
+  }
+
   findUserByEmail(email: string) {
     return this.prismaService.user.findFirst({
       where: {
         email,
+      },
+    });
+  }
+
+  updatePassword(userId: number, newPassword: string) {
+    return this.prismaService.user.update({
+      data: {
+        password: newPassword,
+      },
+      where: {
+        id: userId,
       },
     });
   }

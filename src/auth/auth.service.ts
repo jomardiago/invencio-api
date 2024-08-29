@@ -4,9 +4,10 @@ import {
   UnauthorizedException,
 } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
-import { compare } from "bcrypt";
+import { compare, hash } from "bcrypt";
 import { LoginUserDto } from "./dtos/loginUser.dto";
 import { UsersRepository } from "src/users/users.repository";
+import { ChangePasswordDto } from "./dtos/changePassword.dto";
 
 @Injectable()
 export class AuthService {
@@ -32,6 +33,23 @@ export class AuthService {
       return {
         ...user,
         token,
+      };
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+
+  async changePassword(userId: number, data: ChangePasswordDto) {
+    try {
+      const user = this.usersRepository.findUserById(userId);
+      if (!user) throw new NotFoundException("User does not exists.");
+
+      const hashedPassword = await hash(data.password, 10);
+      await this.usersRepository.updatePassword(userId, hashedPassword);
+
+      return {
+        message: "Password changed successfully.",
       };
     } catch (error) {
       console.error(error);
