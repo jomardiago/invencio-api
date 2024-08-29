@@ -2,6 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { hash } from "bcrypt";
 import { CreateUserDto } from "./dtos/createUser.dto";
 import { UsersRepository } from "./users.repository";
+import { UpdateRoleDto } from "./dtos/updateRole.dto";
 
 @Injectable()
 export class UsersService {
@@ -28,6 +29,19 @@ export class UsersService {
   async findUsers() {
     try {
       return this.usersRepository.findUsers();
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+
+  async updateRole(userId: number, data: UpdateRoleDto) {
+    try {
+      await this.usersRepository.updateRole(userId, data.isAdmin);
+
+      return {
+        message: "Role updated.",
+      };
     } catch (error) {
       console.error(error);
       throw error;

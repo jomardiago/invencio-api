@@ -50,4 +50,15 @@ export class UsersRepository {
       },
     });
   }
+
+  updateRole(userId: number, isAdmin: boolean) {
+    return this.prismaService.user.update({
+      data: {
+        isAdmin,
+      },
+      where: {
+        id: userId,
+      },
+    });
+  }
 }
