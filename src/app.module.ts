@@ -7,6 +7,7 @@ import { AuthModule } from "./auth/auth.module";
 import { CategoriesModule } from "./categories/categories.module";
 import { ProductsModule } from "./products/products.module";
 import { SalesModule } from "./sales/sales.module";
+import { ProfilesModule } from "./profiles/profiles.module";
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { SalesModule } from "./sales/sales.module";
     CategoriesModule,
     ProductsModule,
     SalesModule,
+    ProfilesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
