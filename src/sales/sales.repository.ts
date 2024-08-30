@@ -25,6 +25,14 @@ export class SalesRepository {
     });
   }
 
+  findSalesByProduct(productId: number) {
+    return this.prismaService.sale.findMany({
+      where: {
+        productId,
+      },
+    });
+  }
+
   updateSale(saleId: number, data: UpdateSaleDto) {
     return this.prismaService.sale.update({
       data,
