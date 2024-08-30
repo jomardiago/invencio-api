@@ -4,6 +4,7 @@ import { CategoriesController } from "./categories.controller";
 import { CategoriesRepository } from "./categories.repository";
 import { PrismaService } from "src/prisma/prisma.service";
 import { JwtService } from "@nestjs/jwt";
+import { ProductsRepository } from "src/products/products.repository";
 
 @Module({
   controllers: [CategoriesController],
@@ -12,6 +13,7 @@ import { JwtService } from "@nestjs/jwt";
     CategoriesRepository,
     PrismaService,
     JwtService,
+    ProductsRepository,
   ],
 })
 export class CategoriesModule {}

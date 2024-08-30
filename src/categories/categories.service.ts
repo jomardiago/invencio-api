@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ConflictException,
   Injectable,
   NotFoundException,
@@ -6,10 +7,14 @@ import {
 import { CategoriesRepository } from "./categories.repository";
 import { CreateCategoryDto } from "./dtos/createCategory.dto";
 import { UpdateCategoryDto } from "./dtos/updateCategory.dto";
+import { ProductsRepository } from "src/products/products.repository";
 
 @Injectable()
 export class CategoriesService {
-  constructor(private readonly categoriesRepository: CategoriesRepository) {}
+  constructor(
+    private readonly categoriesRepository: CategoriesRepository,
+    private readonly productsRepository: ProductsRepository,
+  ) {}
 
   async createCategory(data: CreateCategoryDto) {
     try {
@@ -73,6 +78,13 @@ export class CategoriesService {
       const category =
         await this.categoriesRepository.findCategoryById(categoryId);
       if (!category) throw new NotFoundException("Category does not exists.");
+
+      const productsByCategory =
+        await this.productsRepository.findProductsByCategory(categoryId);
+      if (productsByCategory?.length > 0)
+        throw new BadRequestException(
+          "Unable to delete category, there are products under this category.",
+        );
 
       await this.categoriesRepository.deleteCategory(categoryId);
 

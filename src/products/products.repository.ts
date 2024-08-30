@@ -25,6 +25,14 @@ export class ProductsRepository {
     });
   }
 
+  findProductsByCategory(categoryId: number) {
+    return this.prismaService.product.findMany({
+      where: {
+        categoryId,
+      },
+    });
+  }
+
   updateProduct(productId: number, data: UpdateProductDto) {
     return this.prismaService.product.update({
       data,
