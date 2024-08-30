@@ -1,6 +1,11 @@
-import { BadRequestException, Injectable } from "@nestjs/common";
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from "@nestjs/common";
 import { ProfilesRepository } from "./profiles.repository";
 import { CreateProfileDto } from "./dtos/createProfile.dto";
+import { UpdateProfileDto } from "./dtos/updateProfile.dto";
 
 @Injectable()
 export class ProfilesService {
@@ -28,6 +33,22 @@ export class ProfilesService {
   findProfile(userId: number) {
     try {
       return this.profilesRepository.findProfileByUserId(userId);
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+
+  async updateProfile(userId: number, data: UpdateProfileDto) {
+    try {
+      const profile = await this.profilesRepository.findProfileByUserId(userId);
+      if (!profile) throw new NotFoundException("Profile does not exists.");
+
+      await this.profilesRepository.updateProfile(userId, data);
+
+      return {
+        message: "Profile updated.",
+      };
     } catch (error) {
       console.error(error);
       throw error;
