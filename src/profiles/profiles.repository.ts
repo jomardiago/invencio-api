@@ -35,4 +35,12 @@ export class ProfilesRepository {
       },
     });
   }
+
+  deleteProfile(userId: number) {
+    return this.prismaService.profile.delete({
+      where: {
+        userId,
+      },
+    });
+  }
 }

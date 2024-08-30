@@ -54,4 +54,20 @@ export class ProfilesService {
       throw error;
     }
   }
+
+  async deleteProfile(userId: number) {
+    try {
+      const profile = await this.profilesRepository.findProfileByUserId(userId);
+      if (!profile) throw new NotFoundException("Profile does not exists.");
+
+      await this.profilesRepository.deleteProfile(userId);
+
+      return {
+        message: "Profile deleted.",
+      };
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
 }

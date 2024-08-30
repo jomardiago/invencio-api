@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Patch,
   Post,
@@ -40,5 +41,10 @@ export class ProfilesController {
     @Body() data: UpdateProfileDto,
   ) {
     return this.profilesService.updateProfile(req.user.id, data);
+  }
+
+  @Delete()
+  deleteProfile(@Request() req: { user: User }) {
+    return this.profilesService.deleteProfile(req.user.id);
   }
 }
