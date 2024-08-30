@@ -1,0 +1,14 @@
+-- CreateTable
+CREATE TABLE "Sale" (
+    "id" SERIAL NOT NULL,
+    "sellingPrice" DECIMAL(10,2) NOT NULL DEFAULT 0,
+    "quantity" INTEGER NOT NULL DEFAULT 0,
+    "total" DECIMAL(10,2) NOT NULL DEFAULT 0,
+    "createdAt" TIMESTAMPTZ(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "productId" INTEGER NOT NULL,
+
+    CONSTRAINT "Sale_pkey" PRIMARY KEY ("id")
+);
+
+-- AddForeignKey
+ALTER TABLE "Sale" ADD CONSTRAINT "Sale_productId_fkey" FOREIGN KEY ("productId") REFERENCES "Product"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
