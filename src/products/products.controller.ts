@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Patch,
@@ -11,6 +12,7 @@ import { ProductsService } from "./products.service";
 import { AuthGuard } from "src/auth/guards/auth.guard";
 import { CreateProductDto } from "./dtos/createProduct.dto";
 import { UpdateProductDto } from "./dtos/updateProduct.dto";
+import { AdminUserGuard } from "src/users/guards/adminUser.guard";
 
 @Controller({
   path: "products",
@@ -36,5 +38,11 @@ export class ProductsController {
     @Body() data: UpdateProductDto,
   ) {
     return this.productsService.updateProduct(Number(productId), data);
+  }
+
+  @Delete(":productId")
+  @UseGuards(AdminUserGuard)
+  deleteProduct(@Param("productId") productId: string) {
+    return this.productsService.deleteProduct(Number(productId));
   }
 }

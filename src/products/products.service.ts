@@ -58,4 +58,20 @@ export class ProductsService {
       throw error;
     }
   }
+
+  async deleteProduct(productId: number) {
+    try {
+      const product = await this.productsRepository.findProductById(productId);
+      if (!product) throw new NotFoundException("Product does not exists.");
+
+      await this.productsRepository.deleteProduct(productId);
+
+      return {
+        message: "Product deleted.",
+      };
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
 }
