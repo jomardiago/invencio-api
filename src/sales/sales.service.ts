@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { SalesRepository } from "./sales.repository";
 import { CreateSaleDto } from "./dtos/createSale.dto";
 import { ProductsRepository } from "src/products/products.repository";
+import { UpdateSaleDto } from "./dtos/updateSale.dto";
 
 @Injectable()
 export class SalesService {
@@ -31,6 +32,27 @@ export class SalesService {
   findSales() {
     try {
       return this.salesRepository.findSales();
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+
+  async updateSale(saleId: number, data: UpdateSaleDto) {
+    try {
+      const sale = await this.salesRepository.findSaleById(saleId);
+      if (!sale) throw new NotFoundException("Sale does not exists.");
+
+      const product = await this.productsRepository.findProductById(
+        data.productId,
+      );
+      if (!product) throw new NotFoundException("Product does not exists.");
+
+      await this.salesRepository.updateSale(saleId, data);
+
+      return {
+        message: "Sale updated.",
+      };
     } catch (error) {
       console.error(error);
       throw error;

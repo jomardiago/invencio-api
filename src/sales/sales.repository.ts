@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { PrismaService } from "src/prisma/prisma.service";
 import { CreateSaleDto } from "./dtos/createSale.dto";
+import { UpdateSaleDto } from "./dtos/updateSale.dto";
 
 @Injectable()
 export class SalesRepository {
@@ -14,5 +15,22 @@ export class SalesRepository {
 
   findSales() {
     return this.prismaService.sale.findMany();
+  }
+
+  findSaleById(saleId: number) {
+    return this.prismaService.sale.findFirst({
+      where: {
+        id: saleId,
+      },
+    });
+  }
+
+  updateSale(saleId: number, data: UpdateSaleDto) {
+    return this.prismaService.sale.update({
+      data,
+      where: {
+        id: saleId,
+      },
+    });
   }
 }
