@@ -27,4 +27,13 @@ export class ProductsService {
       throw error;
     }
   }
+
+  async findProducts() {
+    try {
+      return this.productsRepository.findProducts();
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
 }

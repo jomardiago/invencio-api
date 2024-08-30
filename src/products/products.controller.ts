@@ -1,4 +1,4 @@
-import { Body, Controller, Post, UseGuards } from "@nestjs/common";
+import { Body, Controller, Get, Post, UseGuards } from "@nestjs/common";
 import { ProductsService } from "./products.service";
 import { AuthGuard } from "src/auth/guards/auth.guard";
 import { CreateProductDto } from "./dtos/createProduct.dto";
@@ -14,5 +14,10 @@ export class ProductsController {
   @Post()
   createProduct(@Body() data: CreateProductDto) {
     return this.productsService.createProduct(data);
+  }
+
+  @Get()
+  findProducts() {
+    return this.productsService.findProducts();
   }
 }

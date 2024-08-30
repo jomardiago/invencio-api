@@ -11,4 +11,8 @@ export class ProductsRepository {
       data,
     });
   }
+
+  findProducts() {
+    return this.prismaService.product.findMany();
+  }
 }
