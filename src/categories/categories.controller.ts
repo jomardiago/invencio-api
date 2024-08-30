@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Patch,
@@ -38,5 +39,10 @@ export class CategoriesController {
     @Body() data: UpdateCategoryDto,
   ) {
     return this.categoriesService.updateCategory(Number(categoryId), data);
+  }
+
+  @Delete(":categoryId")
+  deleteCategory(@Param("categoryId") categoryId: string) {
+    return this.categoriesService.deleteCategory(Number(categoryId));
   }
 }

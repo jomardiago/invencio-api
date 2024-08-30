@@ -67,4 +67,21 @@ export class CategoriesService {
       throw error;
     }
   }
+
+  async deleteCategory(categoryId: number) {
+    try {
+      const category =
+        await this.categoriesRepository.findCategoryById(categoryId);
+      if (!category) throw new NotFoundException("Category does not exists.");
+
+      await this.categoriesRepository.deleteCategory(categoryId);
+
+      return {
+        message: "Category deleted.",
+      };
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
 }
