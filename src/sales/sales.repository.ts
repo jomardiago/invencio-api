@@ -11,4 +11,8 @@ export class SalesRepository {
       data,
     });
   }
+
+  findSales() {
+    return this.prismaService.sale.findMany();
+  }
 }

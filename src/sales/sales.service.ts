@@ -27,4 +27,13 @@ export class SalesService {
       throw error;
     }
   }
+
+  findSales() {
+    try {
+      return this.salesRepository.findSales();
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
 }
