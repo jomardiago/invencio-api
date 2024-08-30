@@ -24,4 +24,13 @@ export class ProfilesService {
       throw error;
     }
   }
+
+  findProfile(userId: number) {
+    try {
+      return this.profilesRepository.findProfileByUserId(userId);
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
 }

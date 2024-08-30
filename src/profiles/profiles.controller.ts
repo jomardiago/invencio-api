@@ -1,4 +1,11 @@
-import { Body, Controller, Post, Request, UseGuards } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Request,
+  UseGuards,
+} from "@nestjs/common";
 import { ProfilesService } from "./profiles.service";
 import { AuthGuard } from "src/auth/guards/auth.guard";
 import { User } from "@prisma/client";
@@ -18,5 +25,10 @@ export class ProfilesController {
     @Body() data: CreateProfileDto,
   ) {
     return this.profilesService.createProfile(req.user.id, data);
+  }
+
+  @Get("user-profile")
+  findProfile(@Request() req: { user: User }) {
+    return this.profilesService.findProfile(req.user.id);
   }
 }
