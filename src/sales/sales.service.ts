@@ -58,4 +58,20 @@ export class SalesService {
       throw error;
     }
   }
+
+  async deleteSale(saleId: number) {
+    try {
+      const sale = await this.salesRepository.findSaleById(saleId);
+      if (!sale) throw new NotFoundException("Sale does not exists.");
+
+      await this.salesRepository.deleteSale(saleId);
+
+      return {
+        message: "Sale deleted.",
+      };
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
 }

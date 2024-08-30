@@ -33,4 +33,12 @@ export class SalesRepository {
       },
     });
   }
+
+  deleteSale(saleId: number) {
+    return this.prismaService.sale.delete({
+      where: {
+        id: saleId,
+      },
+    });
+  }
 }

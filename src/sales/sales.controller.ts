@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Patch,
@@ -11,6 +12,7 @@ import { SalesService } from "./sales.service";
 import { AuthGuard } from "src/auth/guards/auth.guard";
 import { CreateSaleDto } from "./dtos/createSale.dto";
 import { UpdateSaleDto } from "./dtos/updateSale.dto";
+import { AdminUserGuard } from "src/users/guards/adminUser.guard";
 
 @Controller({
   path: "sales",
@@ -33,5 +35,11 @@ export class SalesController {
   @Patch(":saleId")
   updateSale(@Param("saleId") saleId: string, @Body() data: UpdateSaleDto) {
     return this.salesService.updateSale(Number(saleId), data);
+  }
+
+  @Delete(":saleId")
+  @UseGuards(AdminUserGuard)
+  deleteSale(@Param("saleId") saleId: string) {
+    return this.salesService.deleteSale(Number(saleId));
   }
 }
