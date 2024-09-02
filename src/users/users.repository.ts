@@ -36,6 +36,7 @@ export class UsersRepository {
         isAdmin: true,
         createdAt: true,
         password: false,
+        Profile: true,
       },
     });
   }
