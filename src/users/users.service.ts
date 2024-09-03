@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from "@nestjs/common";
 import { hash } from "bcrypt";
 import { CreateUserDto } from "./dtos/createUser.dto";
 import { UsersRepository } from "./users.repository";
@@ -10,6 +14,9 @@ export class UsersService {
 
   async createUser(data: CreateUserDto) {
     try {
+      const user = await this.usersRepository.findUserByEmail(data.email);
+      if (user) throw new ConflictException("User already exists.");
+
       const hashedPassword = await hash(data.password, 10);
 
       await this.usersRepository.createUser({
