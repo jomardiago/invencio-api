@@ -14,7 +14,11 @@ export class ProductsRepository {
   }
 
   findProducts() {
-    return this.prismaService.product.findMany();
+    return this.prismaService.product.findMany({
+      include: {
+        category: true,
+      },
+    });
   }
 
   findProductById(productId: number) {
