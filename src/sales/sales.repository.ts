@@ -14,7 +14,11 @@ export class SalesRepository {
   }
 
   findSales() {
-    return this.prismaService.sale.findMany();
+    return this.prismaService.sale.findMany({
+      include: {
+        product: true,
+      },
+    });
   }
 
   findSaleById(saleId: number) {
