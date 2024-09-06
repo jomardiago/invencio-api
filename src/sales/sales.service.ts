@@ -48,6 +48,36 @@ export class SalesService {
     }
   }
 
+  async findTotalQuantitySoldByProduct() {
+    try {
+      const quantitySoldByProduct =
+        await this.salesRepository.findTotalQuantitySoldByProduct();
+
+      if (quantitySoldByProduct.length > 0) {
+        const salesWithProductDetails = await Promise.all(
+          quantitySoldByProduct.map(async (sale) => {
+            const product = await this.productsRepository.findProductById(
+              sale.productId,
+            );
+
+            return {
+              productId: product.id,
+              title: product.title,
+              quantity: sale._sum.quantity,
+            };
+          }),
+        );
+
+        return salesWithProductDetails;
+      } else {
+        return [];
+      }
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+
   async updateSale(saleId: number, data: UpdateSaleDto) {
     try {
       const sale = await this.salesRepository.findSaleById(saleId);
