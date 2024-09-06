@@ -38,6 +38,16 @@ export class SalesService {
     }
   }
 
+  async findTotalSales() {
+    try {
+      const response = await this.salesRepository.findTotalSales();
+      return response._sum.total;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+
   async updateSale(saleId: number, data: UpdateSaleDto) {
     try {
       const sale = await this.salesRepository.findSaleById(saleId);
