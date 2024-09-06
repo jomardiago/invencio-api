@@ -19,7 +19,6 @@ import { UpdateCategoryDto } from "./dtos/updateCategory.dto";
   version: "1",
 })
 @UseGuards(AuthGuard)
-@UseGuards(AdminUserGuard)
 export class CategoriesController {
   constructor(private readonly categoriesService: CategoriesService) {}
 
@@ -47,6 +46,7 @@ export class CategoriesController {
   }
 
   @Delete(":categoryId")
+  @UseGuards(AdminUserGuard)
   deleteCategory(@Param("categoryId") categoryId: string) {
     return this.categoriesService.deleteCategory(Number(categoryId));
   }
