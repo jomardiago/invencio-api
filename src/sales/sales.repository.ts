@@ -54,6 +54,15 @@ export class SalesRepository {
     });
   }
 
+  findTotalSoldByProduct() {
+    return this.prismaService.sale.groupBy({
+      by: ["productId"],
+      _sum: {
+        total: true,
+      },
+    });
+  }
+
   updateSale(saleId: number, data: UpdateSaleDto) {
     return this.prismaService.sale.update({
       data,

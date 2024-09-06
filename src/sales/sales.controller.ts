@@ -42,6 +42,11 @@ export class SalesController {
     return this.salesService.findTotalQuantitySoldByProduct();
   }
 
+  @Get("total-sold-by-product")
+  findTotalSoldByProduct() {
+    return this.salesService.findTotalSoldByProduct();
+  }
+
   @Patch(":saleId")
   updateSale(@Param("saleId") saleId: string, @Body() data: UpdateSaleDto) {
     return this.salesService.updateSale(Number(saleId), data);

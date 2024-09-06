@@ -82,6 +82,40 @@ export class SalesService {
     }
   }
 
+  async findTotalSoldByProduct() {
+    try {
+      const totalSoldByProduct =
+        await this.salesRepository.findTotalSoldByProduct();
+
+      if (totalSoldByProduct.length > 0) {
+        const salesWithProductDetails = await Promise.all(
+          totalSoldByProduct.map(async (sale) => {
+            const product = await this.productsRepository.findProductById(
+              sale.productId,
+            );
+
+            return {
+              productId: product.id,
+              title: product.title,
+              total: parseFloat(String(sale._sum.total)),
+            };
+          }),
+        );
+
+        const sortedSales = salesWithProductDetails.sort(
+          (a, b) => (b.total ?? 0) - (a.total ?? 0),
+        );
+
+        return sortedSales.slice(0, 5);
+      } else {
+        return [];
+      }
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+
   async updateSale(saleId: number, data: UpdateSaleDto) {
     try {
       const sale = await this.salesRepository.findSaleById(saleId);
