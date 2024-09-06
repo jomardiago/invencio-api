@@ -68,7 +68,11 @@ export class SalesService {
           }),
         );
 
-        return salesWithProductDetails;
+        const sortedSales = salesWithProductDetails.sort(
+          (a, b) => (b.quantity ?? 0) - (a.quantity ?? 0),
+        );
+
+        return sortedSales.slice(0, 5);
       } else {
         return [];
       }
