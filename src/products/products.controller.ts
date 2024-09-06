@@ -32,6 +32,11 @@ export class ProductsController {
     return this.productsService.findProducts();
   }
 
+  @Get("count")
+  findProductsCount() {
+    return this.productsService.findProductsCount();
+  }
+
   @Patch(":productId")
   updateProduct(
     @Param("productId") productId: string,

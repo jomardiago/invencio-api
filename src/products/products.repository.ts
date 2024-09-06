@@ -37,6 +37,10 @@ export class ProductsRepository {
     });
   }
 
+  findProductsCount() {
+    return this.prismaService.product.count();
+  }
+
   updateProduct(productId: number, data: UpdateProductDto) {
     return this.prismaService.product.update({
       data,

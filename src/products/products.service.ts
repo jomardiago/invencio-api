@@ -44,6 +44,15 @@ export class ProductsService {
     }
   }
 
+  findProductsCount() {
+    try {
+      return this.productsRepository.findProductsCount();
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+
   async updateProduct(productId: number, data: UpdateProductDto) {
     try {
       const category = await this.categoriesRepository.findCategoryById(
