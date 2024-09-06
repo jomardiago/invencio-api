@@ -44,6 +44,15 @@ export class CategoriesService {
     }
   }
 
+  findCategoriesCount() {
+    try {
+      return this.categoriesRepository.findCategoriesCount();
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+
   async updateCategory(categoryId: number, data: UpdateCategoryDto) {
     try {
       const categoryToBeUpdated =

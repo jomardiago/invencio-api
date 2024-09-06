@@ -33,6 +33,11 @@ export class CategoriesController {
     return this.categoriesService.findCategories();
   }
 
+  @Get("count")
+  findCategoriesCount() {
+    return this.categoriesService.findCategoriesCount();
+  }
+
   @Patch(":categoryId")
   updateCategory(
     @Param("categoryId") categoryId: string,

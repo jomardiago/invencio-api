@@ -36,6 +36,10 @@ export class CategoriesRepository {
     return this.prismaService.category.findMany();
   }
 
+  findCategoriesCount() {
+    return this.prismaService.category.count();
+  }
+
   updateCategory(categoryId: number, name: string) {
     return this.prismaService.category.update({
       data: {
