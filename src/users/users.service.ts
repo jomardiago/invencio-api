@@ -42,6 +42,15 @@ export class UsersService {
     }
   }
 
+  findUsersCount() {
+    try {
+      return this.usersRepository.findUsersCount();
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
+
   async updateRole(userId: number, data: UpdateRoleDto) {
     try {
       const user = await this.usersRepository.findUserById(userId);

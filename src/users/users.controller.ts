@@ -33,6 +33,11 @@ export class UsersController {
     return this.usersService.findUsers();
   }
 
+  @Get("count")
+  findUsersCount() {
+    return this.usersService.findUsersCount();
+  }
+
   @Patch(":userId/role")
   updateRole(@Param("userId") userId: string, @Body() data: UpdateRoleDto) {
     return this.usersService.updateRole(Number(userId), data);

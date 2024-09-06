@@ -41,6 +41,10 @@ export class UsersRepository {
     });
   }
 
+  findUsersCount() {
+    return this.prismaService.user.count();
+  }
+
   updatePassword(userId: number, newPassword: string) {
     return this.prismaService.user.update({
       data: {
