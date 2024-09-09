@@ -80,7 +80,7 @@ export class UsersService {
         user.id,
       );
 
-      if (profile.id) {
+      if (profile?.id) {
         await this.profilesRepository.deleteProfile(profile.userId);
       }
 
