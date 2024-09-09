@@ -7,10 +7,14 @@ import { hash } from "bcrypt";
 import { CreateUserDto } from "./dtos/createUser.dto";
 import { UsersRepository } from "./users.repository";
 import { UpdateRoleDto } from "./dtos/updateRole.dto";
+import { ProfilesRepository } from "src/profiles/profiles.repository";
 
 @Injectable()
 export class UsersService {
-  constructor(private readonly usersRepository: UsersRepository) {}
+  constructor(
+    private readonly usersRepository: UsersRepository,
+    private readonly profilesRepository: ProfilesRepository,
+  ) {}
 
   async createUser(data: CreateUserDto) {
     try {
@@ -71,6 +75,14 @@ export class UsersService {
     try {
       const user = await this.usersRepository.findUserById(userId);
       if (!user) throw new NotFoundException("User does not exists.");
+
+      const profile = await this.profilesRepository.findProfileByUserId(
+        user.id,
+      );
+
+      if (profile.id) {
+        await this.profilesRepository.deleteProfile(profile.userId);
+      }
 
       await this.usersRepository.deleteUser(userId);
 
